@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/index.xhtml">
+        <ui:define name="body"> 
+
+            <h1 align="center">Cadastro de Fornecedores</h1>
+            <h:form>
+                <p:messages />
+                <p:growl showDetail="false"/>
+                <p:panelGrid columns="2">
+                    Nome:<p:inputText value="#{fornecedorControle.fornecedor.nome}" size="50"
+                                      required="true" requiredMessage="O nome é obrigatório!"
+                                      id="nome"/>
+                    CPF/CNPJ:<p:inputText value="#{fornecedorControle.fornecedor.cpfcnpj}" size="15"
+                                          required="true" requiredMessage="O CPF/CNPJ é obrigatório!"
+                                          id="cpf"/>
+                    Endereço:<p:inputText value="#{fornecedorControle.fornecedor.endereco}" size="15"                                      
+                                          id="end"/>
+                    Numero:<p:inputText value="#{fornecedorControle.fornecedor.numero}" size="15"                                      
+                                        id="num"/>
+                    Cidade:<p:autoComplete value="#{fornecedorControle.fornecedor.cidade}"
+                                           converter="#{fornecedorControle.cidadeConverter}"
+                                           completeMethod="#{fornecedorControle.listaCidadesFiltrando(filtro)}"
+                                           var="cid" 
+                                           itemLabel="#{cid.nome}" 
+                                           itemValue="#{cid}"
+                                           forceSelection="true">
+                    </p:autoComplete> 
+                    Estado:<p:autoComplete value="#{fornecedorControle.fornecedor.cidade.estado}"
+                                           converter="#{fornecedorControle.estadoConverter}"
+                                           completeMethod="#{fornecedorControle.listaEstadosFiltrando}"
+                                           var="est" 
+                                           itemLabel="#{est.nome}" 
+                                           itemValue="#{est}"
+                                           forceSelection="true">
+                    </p:autoComplete>                    
+                   
+                    <p:commandButton value="Salvar" action="fornecedorlista"
+                                     actionListener="#{fornecedorControle.salvar()}"
+                                     ajax="false"/>
+                    <p:commandButton value="Voltar" action="fornecedorlista" 
+                                     ajax="false" immediate="true"/>
+                </p:panelGrid>            
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

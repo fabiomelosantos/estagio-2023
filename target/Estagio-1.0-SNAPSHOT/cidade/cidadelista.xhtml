@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/index.xhtml">
+        <ui:define name="body"> 
+
+            <h1 align="center">Lista de Cidades</h1>
+            <h:form>           
+                <p:dataTable value="#{cidadeControle.listaCidades}" var="cid"
+                             emptyMessage="Nenhum cidade cadastrado!"
+                             paginator="true" rows="5" 
+                             rowsPerPageTemplate="2,5,10,{ShowAll|'All'}">
+                    <p:column headerText="Nome"
+                              filterBy="#{cid.nome}" filterMatchMode="contains"
+                              sortBy="#{cid.nome}">
+                        <p:outputLabel value="#{cid.nome}"/>
+                    </p:column>
+                    <p:column headerText="UF"
+                              filterBy="#{cid.estado.uf}" filterMatchMode="contains"
+                              sortBy="#{cid.estado.uf}">
+                        <p:outputLabel value="#{cid.estado.uf}"/>
+                    </p:column>
+                    <p:column headerText="OP" width="100">
+                        <p:commandButton ajax="false" 
+                                         action="#{cidadeControle.remover(cid)}"
+                                         icon="ui-icon-trash"
+                                         immediate="true"/>
+                        <p:commandButton ajax="false" 
+                                         actionListener="#{cidadeControle.editar(cid)}"
+                                         action="cidadeedita"
+                                         icon="ui-icon-pencil"
+                                         immediate="true"/>
+                    </p:column>                               
+                </p:dataTable>
+                <p:commandButton value="Nova Cidade" action="cidadeedita"/>
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>

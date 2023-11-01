@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/index.xhtml">
+        <ui:define name="body"> 
+
+            <h1 align="center">Lista de Fornecedores</h1>
+            <h:form>           
+                <p:dataTable value="#{fornecedorControle.listaFornecedors}" var="forn"
+                             emptyMessage="Nenhum fornecedor cadastrado!"
+                             paginator="true" rows="5" 
+                             rowsPerPageTemplate="2,5,10,{ShowAll|'All'}">
+                    <p:column headerText="Nome"
+                              filterBy="#{forn.nome}" filterMatchMode="contains"
+                              sortBy="#{forn.nome}">
+                        <p:outputLabel value="#{forn.nome}"/>
+                    </p:column>
+                    <p:column headerText="CPF / CNPJ"
+                              filterBy="#{forn.cpfcnpj}" filterMatchMode="contains"
+                              sortBy="#{forn.cpfcnpj}">
+                        <p:outputLabel value="#{forn.cpfcnpj}"/>
+                    </p:column>
+                    <p:column headerText="Endereço"
+                              filterBy="#{forn.endereco}" filterMatchMode="contains"
+                              sortBy="#{forn.endereco}">
+                        <p:outputLabel value="#{forn.endereco}"/>
+                    </p:column>
+                    <p:column headerText="Numero"
+                              filterBy="#{forn.numero}" filterMatchMode="contains"
+                              sortBy="#{forn.numero}">
+                        <p:outputLabel value="#{forn.numero}"/>
+                    </p:column>
+                    <p:column headerText="Cidade"
+                              filterBy="#{forn.cidade.nome}" filterMatchMode="contains"
+                              sortBy="#{forn.cidade.nome}">
+                        <p:outputLabel value="#{forn.cidade.nome}"/>
+                    </p:column>
+                    <p:column headerText="UF"
+                              filterBy="#{forn.cidade.estado.uf}" filterMatchMode="contains"
+                              sortBy="#{forn.cidade.estado.uf}">
+                        <p:outputLabel value="#{forn.cidade.estado.uf}"/>
+                    </p:column>
+                    <p:column headerText="OP" width="100">
+                        <p:commandButton ajax="false" 
+                                         action="#{fornecedorControle.remover(forn)}"
+                                         icon="ui-icon-trash"
+                                         immediate="true"/>
+                        <p:commandButton ajax="false" 
+                                         actionListener="#{fornecedorControle.editar(forn)}"
+                                         action="fornecedoredita"
+                                         icon="ui-icon-pencil"
+                                         immediate="true"/>
+                    </p:column>                               
+                </p:dataTable>
+                <p:commandButton value="Novo fornecedor" action="fornecedoredita"/>
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>
